@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 340">
+  <rect width="600" height="340" fill="#E8F0FF"/>
+  <rect width="600" height="340" fill="none" stroke="#111827" stroke-width="6"/>
+  <path d="M300 60 C 380 60 420 120 300 180 C 180 220 220 290 300 290" fill="none" stroke="#FF6B7A" stroke-width="14" stroke-linecap="round"/>
+  <path d="M300 60 C 260 90 300 130 300 180 C 300 220 260 250 300 290" fill="none" stroke="#55E6FF" stroke-width="14" stroke-linecap="round"/>
+  <circle cx="470" cy="80" r="26" fill="#72F2B8" stroke="#111827" stroke-width="6"/>
+  <text x="40" y="120" font-family="Arial Black, sans-serif" font-weight="900" font-size="30" fill="#111827">VOICE</text>
+  <text x="40" y="155" font-family="Arial Black, sans-serif" font-weight="900" font-size="30" fill="#FF6B7A">VERIFY</text>
+</svg>

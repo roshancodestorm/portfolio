@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 340">
+  <rect width="600" height="340" fill="#111827"/>
+  <rect width="600" height="340" fill="none" stroke="#111827" stroke-width="6"/>
+  <rect x="70" y="60" width="460" height="90" rx="8" fill="#FFD166" stroke="#FFF8E7" stroke-width="6"/>
+  <rect x="150" y="190" width="300" height="70" rx="8" fill="#55E6FF" stroke="#FFF8E7" stroke-width="6"/>
+  <circle cx="160" cy="105" r="14" fill="#FF6B7A" stroke="#111827" stroke-width="4"/>
+  <text x="40" y="310" font-family="Arial Black, sans-serif" font-weight="900" font-size="44" fill="#72F2B8">J.A.R.V.I.S</text>
+</svg>
