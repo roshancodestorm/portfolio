@@ -2,10 +2,7 @@
 
 Link https://ledekh.netlify.app/
 
-Premium, characterful portfolio for **Roshan Kannaujiya** — AI & ML Student, Software Developer.
-Built with React 19, Vite 8, Tailwind CSS 4, framer-motion visuals, jsPDF and an optional
-Firebase backend. Inspired by a neo-brutalist / hand-drawn visual language: cream background,
-thick `#111827` outlines, hard offset shadows, playful accents.
+<img width="1366" height="768" alt="image" src="https://github.com/user-attachments/assets/66944d46-f400-4d7d-a15e-296ef8c02236" />
 
 ## Stack
 
@@ -17,38 +14,11 @@ thick `#111827` outlines, hard offset shadows, playful accents.
 - **Auth:** Firebase Auth when configured; dev-demo login otherwise
 - **Assistant:** Web Speech API (SpeechRecognition + SpeechSynthesis) with a secure `/api/chat` hook
 
-## Run locally
+<img width="1366" height="768" alt="image" src="https://github.com/user-attachments/assets/0adab9de-b5d8-49d8-b37e-fba3d88b4563" />
 
-```bash
-npm install
-npm run dev        # http://localhost:5173
-npm run build      # production build → dist/
-npm run lint       # eslint
-```
 
-## Routes (hash-based — works on any static host)
 
-| Route | Page |
-|-------|------|
-| `#/` | Main portfolio (Home, Projects, Skills, About, Connect) |
-| `#/admin` | Admin login |
-| `#/dashboard` | Admin dashboard (Projects · Messages · Resume · Profile) |
 
-Dashboard dev login (shown on the login screen when Firebase is off):
-`admin@roshan.dev` / `admin123`. Passwords are never stored in `localStorage` — only a
-`sessionStorage` session flag is set after authentication.
-
-## Configuration
-
-Copy `.env.example` → `.env` and fill what you want:
-
-| Variable | Purpose |
-|----------|---------|
-| `VITE_FIREBASE_*` | Firebase client config (Auth / Firestore / Storage) |
-| `VITE_GOOGLE_FORM_URL` | Google Form embed URL for "Quick Work Request" |
-| `VITE_AI_CHAT_ENDPOINT` | Secure chat proxy (default `/api/chat`) |
-| `VITE_REMOVE_BG_ENDPOINT` | Secure background-removal proxy (default `/api/remove-background`) |
-| `AI_API_KEY` / `REMOVE_BG_API_KEY` | **Server-side only** — used by Netlify Functions, never shipped |
 
 ### Firebase
 
@@ -70,11 +40,8 @@ remove.bg (`REMOVE_BG_API_KEY` stays server-side). Result is previewed, then sav
 
 ## Deployment
 
-### Netlify
+<img width="1366" height="768" alt="image" src="https://github.com/user-attachments/assets/9f6596ac-ddb2-40b6-9ad3-68f8b68edae7" />
 
-- `netlify.toml` ships ready: `npm run build`, publish `dist`, SPA redirects, and `/api/*` rewrites.
-- Deploy the functions with `netlify deploy` (Netlify auto-detects `netlify/functions`).
-- Set env vars in the Netlify dashboard; never commit `.env`.
 
 ### GitHub Pages / other static hosts
 
