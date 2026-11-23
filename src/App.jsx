@@ -22,6 +22,25 @@ function getRoute() {
   return window.location.hash.replace(/^#\/?/, '').split('?')[0].toLowerCase()
 }
 
+function SiteFooter({ social }) {
+  return (
+    <footer className="relative z-10 border-t-3 border-ink bg-ink py-12">
+      <div className="section-shell flex flex-col items-center gap-5 text-center">
+        <p className="font-display text-xl font-bold tracking-tight text-cream">
+          {DEVELOPER_NAME}
+        </p>
+        <p className="font-display text-[13px] font-bold text-cream/70">
+          {DEVELOPER_TITLE.replace(' \u00b7 ', ' | ')}
+        </p>
+        <SocialIconRow links={social} />
+        <p className="text-[12px] text-cream/50">
+          © {new Date().getFullYear()} {DEVELOPER_NAME} · All Rights Reserved
+        </p>
+      </div>
+    </footer>
+  )
+}
+
 export default function App() {
   const [route, setRoute] = useState(getRoute)
   const [activeSection, setActiveSection] = useState('home')
@@ -55,11 +74,29 @@ export default function App() {
     }
   }, [])
 
-  const handleNavigate = useCallback((section) => {
-    const el = document.getElementById(section)
-    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' })
-    setActiveSection(section)
-  }, [])
+  const handleNavigate = useCallback(
+    (section) => {
+      // Activity is its own hashed page now, not a section on the homepage.
+      if (section === 'activity') {
+        if (window.location.hash !== '#/activity') window.location.hash = '#/activity'
+        setActiveSection('activity')
+        return
+      }
+
+      const scrollToSection = () => {
+        document.getElementById(section)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      }
+
+      if (['admin', 'dashboard', 'activity'].includes(route)) {
+        window.location.hash = '#/'
+        requestAnimationFrame(() => requestAnimationFrame(scrollToSection))
+      } else {
+        scrollToSection()
+      }
+      setActiveSection(section)
+    },
+    [route],
+  )
 
   const handleResume = useCallback(async () => {
     const resume = await repo.resume.load()
@@ -68,7 +105,7 @@ export default function App() {
   }, [])
 
   useEffect(() => {
-    if (route && !['projects', 'skills', 'activity', 'about', 'contact'].includes(route)) return
+    if (route && !['home', 'projects', 'skills', 'about', 'connect', 'contact'].includes(route)) return
     const elements = SECTIONS.map((id) => document.getElementById(id)).filter(Boolean)
     if (!elements.length) return
     const observer = new IntersectionObserver(
@@ -83,6 +120,23 @@ export default function App() {
     elements.forEach((el) => observer.observe(el))
     return () => observer.disconnect()
   }, [route, ready])
+
+  // Dedicated GitHub activity page (#/activity)
+  if (route === 'activity') {
+    return (
+      <div className="relative min-h-screen bg-cream">
+        <CursorGlow />
+        <BackgroundShapes />
+        <Navbar activeSection="activity" onNavigate={handleNavigate} onResume={handleResume} />
+        <main className="relative z-10 pt-10">
+          <GitHubActivity sectionId="activity" onBack={() => handleNavigate('home')} />
+        </main>
+        <SiteFooter social={social} />
+        <JarvisAssistant />
+        <ScrollToTop />
+      </div>
+    )
+  }
 
   // Admin routes
   if (route === 'admin') {
@@ -112,26 +166,12 @@ export default function App() {
         <Home sectionId="home" profileImage={profileImage} social={social} onNavigate={handleNavigate} onResume={handleResume} />
         <Projects projects={projects} />
         <Skills />
-        <GitHubActivity sectionId="activity" />
         <About sectionId="about" profileImage={profileImage} />
         <Connect sectionId="connect" social={social} />
         <Contact sectionId="contact" />
       </main>
 
-      <footer className="relative z-10 border-t-3 border-ink bg-ink py-12">
-        <div className="section-shell flex flex-col items-center gap-5 text-center">
-          <p className="font-display text-xl font-bold tracking-tight text-cream">
-            {DEVELOPER_NAME}
-          </p>
-          <p className="font-display text-[13px] font-bold text-cream/70">
-            {DEVELOPER_TITLE.replace(' \u00b7 ', ' | ')}
-          </p>
-          <SocialIconRow links={social} />
-          <p className="text-[12px] text-cream/50">
-            © {new Date().getFullYear()} {DEVELOPER_NAME} · All Rights Reserved
-          </p>
-        </div>
-      </footer>
+      <SiteFooter social={social} />
 
       <JarvisAssistant />
       <ScrollToTop />

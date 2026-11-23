@@ -35,8 +35,9 @@ Point `VITE_AI_CHAT_ENDPOINT` at it and set `AI_API_KEY` on the server.
 
 ### GitHub activity
 
-The Activity section uses two server-only endpoints: `GET /api/github-rest` (profile, stats,
-repositories, commits, PRs) and `GET /api/github-graphql` (`contributionsCollection` heatmap).
+The live dashboard is its own page at `#/activity` (linked from the navbar). It uses two
+server-only endpoints: `GET /api/github-rest` (profile, stats, repositories, commits, PRs) and
+`GET /api/github-graphql` (`contributionsCollection` heatmap).
 Set `GITHUB_TOKEN` in Netlify environment variables — **never with a `VITE_` prefix** — and
 optionally `GITHUB_USERNAME`. Without a token, REST still uses anonymous public endpoints and
 the heatmap shows an explicit unavailable state instead of fake data. Revoke any token that was

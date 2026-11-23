@@ -9,6 +9,7 @@ import {
   FaExclamationTriangle,
   FaCode,
   FaCalendarAlt,
+  FaArrowLeft,
 } from 'react-icons/fa'
 import SectionHeader from '../ui/SectionHeader'
 import Reveal from '../ui/Reveal'
@@ -40,7 +41,7 @@ const HEATMAP_MESSAGES = {
     'GitHub did not return a contribution calendar for this account.',
 }
 
-export default function GitHubActivity({ sectionId }) {
+export default function GitHubActivity({ sectionId, onBack }) {
   const [data, setData] = useState(null)
   const [status, setStatus] = useState('loading')
   const [attempt, setAttempt] = useState(0)
@@ -81,14 +82,25 @@ export default function GitHubActivity({ sectionId }) {
             title="Developer"
             accent="Activity"
             right={
-              <a
-                href={LINKS.github}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="bl-btn bl-btn-dark h-11 !px-4 text-[12.5px]"
-              >
-                <FaGithub aria-hidden="true" /> View profile
-              </a>
+              <div className="flex flex-wrap gap-3">
+                {onBack && (
+                  <button
+                    type="button"
+                    onClick={onBack}
+                    className="bl-btn bl-btn-peach h-11 !px-4 text-[12.5px]"
+                  >
+                    <FaArrowLeft aria-hidden="true" /> Back to portfolio
+                  </button>
+                )}
+                <a
+                  href={LINKS.github}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="bl-btn bl-btn-dark h-11 !px-4 text-[12.5px]"
+                >
+                  <FaGithub aria-hidden="true" /> View profile
+                </a>
+              </div>
             }
           />
         </Reveal>
