@@ -19,6 +19,7 @@ export const NAV_LINKS = [
   { id: 'home', label: 'Home' },
   { id: 'projects', label: 'Projects' },
   { id: 'skills', label: 'Skills' },
+  { id: 'activity', label: 'Activity' },
   { id: 'about', label: 'About' },
   { id: 'contact', label: 'Contact' },
 ]
@@ -30,6 +31,8 @@ export const GOOGLE_FORM_URL = import.meta.env.VITE_GOOGLE_FORM_URL || ''
 
 export const AI_CHAT_ENDPOINT = import.meta.env.VITE_AI_CHAT_ENDPOINT || '/api/chat'
 export const REMOVE_BG_ENDPOINT = import.meta.env.VITE_REMOVE_BG_ENDPOINT || '/api/remove-background'
+export const GITHUB_REST_ENDPOINT = import.meta.env.VITE_GITHUB_REST_ENDPOINT || '/api/github-rest'
+export const GITHUB_GRAPHQL_ENDPOINT = import.meta.env.VITE_GITHUB_GRAPHQL_ENDPOINT || '/api/github-graphql'
 
 export const BUDGETS = ['Under ₹5,000', '₹5,000–₹10,000', '₹10,000–₹25,000', '₹25,000+']
 export const WORK_TYPES = [

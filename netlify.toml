@@ -5,13 +5,8 @@
 [build.environment]
   NODE_VERSION = "20"
 
-# SPA fallback – every route serves index.html
-[[redirects]]
-  from = "/*"
-  to = "/index.html"
-  status = 200
-
-# Serverless API endpoints (example Netlify Functions)
+# Serverless API endpoints. These MUST come before the SPA fallback so
+# Netlify routes /api/* to functions instead of index.html.
 [[redirects]]
   from = "/api/chat"
   to = "/.netlify/functions/chat"
@@ -20,6 +15,22 @@
 [[redirects]]
   from = "/api/remove-background"
   to = "/.netlify/functions/remove-background"
+  status = 200
+
+[[redirects]]
+  from = "/api/github-rest"
+  to = "/.netlify/functions/github-rest"
+  status = 200
+
+[[redirects]]
+  from = "/api/github-graphql"
+  to = "/.netlify/functions/github-graphql"
+  status = 200
+
+# SPA fallback — every other route serves index.html
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
   status = 200
 
 # Cache static assets aggressively

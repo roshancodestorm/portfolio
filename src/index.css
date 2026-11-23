@@ -724,6 +724,50 @@ body {
   box-shadow: 2px 2px 0 var(--color-ink);
 }
 
+/* ── GitHub contribution heatmap ─────────────────────────── */
+.gh-heatmap-scroll {
+  width: 100%;
+  overflow-x: auto;
+  padding: 10px 10px 12px;
+  border: 3px solid var(--color-ink);
+  border-radius: 12px;
+  background: #ffffff;
+  box-shadow: 4px 4px 0 var(--color-ink);
+  scrollbar-color: var(--color-ink) var(--color-cream);
+}
+.gh-heatmap {
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-rows: repeat(7, 12px);
+  grid-auto-columns: 12px;
+  gap: 3px;
+  width: max-content;
+}
+.gh-cell {
+  display: block;
+  width: 12px;
+  height: 12px;
+  border: 1px solid rgba(17, 24, 39, 0.75);
+  border-radius: 2px;
+  background: #eef2f7;
+}
+.gh-level-0 { background: #eef2f7; }
+.gh-level-1 { background: #b9f2d2; }
+.gh-level-2 { background: #72f2b8; }
+.gh-level-3 { background: #2fbf7a; }
+.gh-level-4 { background: #0f8f56; }
+@media (max-width: 640px) {
+  .gh-cell {
+    width: 10px;
+    height: 10px;
+  }
+  .gh-heatmap {
+    grid-template-rows: repeat(7, 10px);
+    grid-auto-columns: 10px;
+    gap: 2px;
+  }
+}
+
 /* ── Reduced motion ──────────────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
   *,

@@ -1,17 +1,20 @@
 import { useEffect, useState } from 'react'
-import { FaEdit, FaTrash, FaPlus, FaTimes, FaGithub, FaExternalLinkAlt } from 'react-icons/fa'
+import { FaEdit, FaTrash, FaPlus, FaTimes, FaGithub, FaExternalLinkAlt, FaStar } from 'react-icons/fa'
 import { repo } from '../../utils/db'
-import { PROJECT_CATEGORIES } from '../../data/projectsData'
+import { PROJECT_CATEGORY_OPTIONS, CATEGORY_LABELS } from '../../data/projectsData'
+import ProjectThumb from '../ui/ProjectThumb'
 
-const CATS = PROJECT_CATEGORIES.filter((c) => c !== 'ALL')
 const EMPTY = {
   title: '',
   description: '',
   tech: '',
   category: [],
-  githubUrl: 'https://github.com/roshancodestorm',
+  githubUrl: '',
+  githubLabel: 'View on GitHub',
   liveUrl: '',
+  liveLabel: 'Live Demo',
   image: '',
+  featured: false,
 }
 
 function readAsDataURL(file) {
@@ -55,8 +58,11 @@ export default function TabProjects({ onProjectsChange }) {
       tech: (p.tech || []).join(', '),
       category: p.category || [],
       githubUrl: p.githubUrl || '',
+      githubLabel: p.githubLabel || 'View on GitHub',
       liveUrl: p.liveUrl || '',
+      liveLabel: p.liveLabel || 'Live Demo',
       image: p.image || '',
+      featured: Boolean(p.featured),
     })
     setEditingId(p.id)
   }
@@ -86,10 +92,13 @@ export default function TabProjects({ onProjectsChange }) {
       title: form.title.trim(),
       description: form.description.trim(),
       tech: form.tech.split(',').map((t) => t.trim()).filter(Boolean),
-      category: form.category.length ? form.category : ['OTHER'],
+      category: form.category.length ? form.category : ['WEB'],
       githubUrl: form.githubUrl.trim(),
+      githubLabel: form.githubLabel.trim() || 'View on GitHub',
       liveUrl: form.liveUrl.trim(),
+      liveLabel: form.liveLabel.trim() || 'Live Demo',
       image: form.image,
+      featured: Boolean(form.featured),
     }
     if (editingId === '__new__') {
       await repo.projects.add(payload)
@@ -152,21 +161,31 @@ export default function TabProjects({ onProjectsChange }) {
             <div>
               <span className="field-label">Categories</span>
               <div className="bl-radio-group">
-                {CATS.map((cat) => (
-                  <label key={cat} className="bl-radio">
-                    <input type="checkbox" checked={form.category.includes(cat)} onChange={() => toggleCat(cat)} />
-                    <span>{cat}</span>
+                {PROJECT_CATEGORY_OPTIONS.map(({ id, label }) => (
+                  <label key={id} className="bl-radio">
+                    <input type="checkbox" checked={form.category.includes(id)} onChange={() => toggleCat(id)} />
+                    <span>{label}</span>
                   </label>
                 ))}
               </div>
             </div>
+            <label className="bl-radio self-start">
+              <input
+                type="checkbox"
+                checked={form.featured}
+                onChange={(e) => setForm({ ...form, featured: e.target.checked })}
+              />
+              <span><FaStar aria-hidden="true" /> Show in Featured section</span>
+            </label>
             <div>
               <label className="field-label">GitHub URL</label>
-              <input className="bl-input" value={form.githubUrl} onChange={(e) => setForm({ ...form, githubUrl: e.target.value })} />
+              <input className="bl-input" value={form.githubUrl} onChange={(e) => setForm({ ...form, githubUrl: e.target.value })} placeholder="https://github.com/…" />
+              <input className="bl-input mt-2" value={form.githubLabel} onChange={(e) => setForm({ ...form, githubLabel: e.target.value })} aria-label="GitHub button label" />
             </div>
             <div>
               <label className="field-label">Live Demo URL</label>
-              <input className="bl-input" value={form.liveUrl} onChange={(e) => setForm({ ...form, liveUrl: e.target.value })} />
+              <input className="bl-input" value={form.liveUrl} onChange={(e) => setForm({ ...form, liveUrl: e.target.value })} placeholder="https://…" />
+              <input className="bl-input mt-2" value={form.liveLabel} onChange={(e) => setForm({ ...form, liveLabel: e.target.value })} aria-label="Live demo button label" />
             </div>
             <div>
               <label className="field-label">Project Image</label>
@@ -192,22 +211,28 @@ export default function TabProjects({ onProjectsChange }) {
         {projects.length === 0 && (
           <div className="bl-card p-10 text-center text-inkmuted">No projects yet.</div>
         )}
-        {projects.map((p) => (
+        {projects.map((p, index) => (
           <article key={p.id} className="bl-card flex gap-4 p-4">
-            <img src={p.image} alt={p.title} className="h-24 w-32 shrink-0 rounded-lg border-3 border-ink object-cover" />
+            <ProjectThumb
+              src={p.image}
+              title={p.title}
+              accentIndex={index}
+              className="!h-24 w-32 shrink-0 rounded-lg border-3 border-ink object-cover"
+            />
             <div className="min-w-0 flex-1">
-              <h3 className="truncate font-display text-[16px] font-bold text-ink">{p.title}</h3>
-              <p className="mt-0.5 text-[12px] font-bold text-coral uppercase">{(p.category || []).join(' · ') || 'OTHER'}</p>
+              <div className="flex flex-wrap items-center gap-2">
+                <h3 className="truncate font-display text-[16px] font-bold text-ink">{p.title}</h3>
+                {p.featured && (
+                  <span className="bl-tag bg-ink !px-2 !py-0.5 !text-[10px] !text-cream">
+                    <FaStar aria-hidden="true" /> Featured
+                  </span>
+                )}
+              </div>
+              <p className="mt-0.5 text-[12px] font-bold text-coral uppercase">
+                {(p.category || []).map((id) => CATEGORY_LABELS[id] || id).join(' · ') || 'Uncategorised'}
+              </p>
               <p className="mt-1 line-clamp-2 text-[12.5px] text-inkmuted">{p.description}</p>
               <div className="mt-2 flex flex-wrap gap-2">
-                <a
-                  href={p.githubUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-1 rounded border-2 border-ink bg-ink px-2 py-1 text-[11px] font-bold text-cream"
-                >
-                  <FaGithub aria-hidden="true" /> GitHub
-                </a>
                 {p.liveUrl && (
                   <a
                     href={p.liveUrl}
@@ -215,7 +240,17 @@ export default function TabProjects({ onProjectsChange }) {
                     rel="noopener noreferrer"
                     className="flex items-center gap-1 rounded border-2 border-ink bg-peach px-2 py-1 text-[11px] font-bold text-ink"
                   >
-                    <FaExternalLinkAlt aria-hidden="true" /> Demo
+                    <FaExternalLinkAlt aria-hidden="true" /> {p.liveLabel || 'Live Demo'}
+                  </a>
+                )}
+                {p.githubUrl && (
+                  <a
+                    href={p.githubUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-1 rounded border-2 border-ink bg-ink px-2 py-1 text-[11px] font-bold text-cream"
+                  >
+                    <FaGithub aria-hidden="true" /> {p.githubLabel || 'GitHub'}
                   </a>
                 )}
               </div>

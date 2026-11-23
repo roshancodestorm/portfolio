@@ -101,7 +101,7 @@ export default function Navbar({ activeSection, onNavigate, onResume }) {
       {/* Mobile dropdown */}
       <div
         className={`overflow-hidden border-t-3 border-ink bg-cream transition-all duration-300 md:hidden ${
-          open ? 'max-h-[430px] opacity-100' : 'max-h-0 opacity-0 border-t-0'
+          open ? 'max-h-[520px] opacity-100' : 'max-h-0 opacity-0 border-t-0'
         }`}
       >
         <nav className="section-shell flex flex-col gap-1 py-4" aria-label="Mobile" aria-hidden={!open}>

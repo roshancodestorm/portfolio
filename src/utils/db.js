@@ -134,36 +134,40 @@ export async function deleteFromCollection(name, id) {
 }
 
 /* ── Domain repositories ─────────────────────────────────── */
-const GENERIC_GITHUB = 'https://github.com/roshancodestorm'
+// Built-in demo entries retired when the curated six-project catalogue shipped.
+// User-created projects are never in this list and are always preserved.
+const RETIRED_PROJECT_IDS = new Set(['p-jarvis', 'p-voice-verify'])
 
 export const repo = {
   projects: {
     load: async () => {
       const defaults = defaultProjects
       const stored = lsGet('projects', null)
-      // Robust merge on EVERY load — no version gating, no lost entries:
-      //   1. code defaults are ALWAYS present (jarvis/voice/cyber/portfolio…)
-      //   2. stored user edits override default fields
-      //   3. curated categories always win for default projects
-      //   4. placeholder repo links get replaced with real URLs
+
+      // Merge on every load so the six curated projects cannot disappear:
+      //   1. defaults define the order and canonical content
+      //   2. stored user projects are appended after them
+      //   3. custom fields on stored defaults are kept, but curated fields
+      //      (name, copy, tags, links, featured flag) always win
       const knownDefaults = new Map(defaults.map((d) => [d.id, d]))
       const mergedMap = new Map(defaults.map((d) => [d.id, { ...d }]))
+
       if (Array.isArray(stored)) {
         for (const s of stored) {
-          if (!s || typeof s !== 'object') continue
+          if (!s || typeof s !== 'object' || !s.id) continue
+          if (RETIRED_PROJECT_IDS.has(s.id)) continue
           mergedMap.set(s.id, { ...s })
         }
       }
+
       const normalized = [...mergedMap.values()].map((p) => {
         const d = knownDefaults.get(p.id)
         if (!d) return p
-        const merged = { ...p }
-        merged.category = d.category
-        if (p.githubUrl === GENERIC_GITHUB && d.githubUrl !== GENERIC_GITHUB) {
-          merged.githubUrl = d.githubUrl
-        }
-        return merged
+        // `...d` last keeps the published catalogue exact while unrelated
+        // custom fields from storage remain available.
+        return { ...p, ...d }
       })
+
       lsSet('projects', normalized)
       return normalized
     },

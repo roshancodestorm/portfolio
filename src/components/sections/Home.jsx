@@ -104,7 +104,7 @@ export default function Home({ sectionId, profileImage, social, onNavigate, onRe
             className="absolute -right-2 top-1/2 z-20 hidden sm:block"
             style={{ animation: 'floaty 4.5s ease-in-out infinite' }}
           >
-            <span className="bl-tag bg-peach !text-[13px]">⚡ 4+ projects</span>
+            <span className="bl-tag bg-peach !text-[13px]">⚡ 6 projects</span>
           </div>
           <button
             type="button"

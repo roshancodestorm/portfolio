@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 340" role="img" aria-label="NASA Mission Architect cover art">
+  <rect width="600" height="340" fill="#0F172A"/>
+  <rect width="600" height="340" fill="none" stroke="#111827" stroke-width="6"/>
+  <g fill="#FFF8E7" opacity="0.85">
+    <circle cx="48" cy="52" r="3"/><circle cx="128" cy="88" r="2"/><circle cx="210" cy="40" r="3"/>
+    <circle cx="285" cy="110" r="2"/><circle cx="360" cy="54" r="3"/><circle cx="470" cy="96" r="2"/>
+    <circle cx="552" cy="42" r="3"/><circle cx="520" cy="180" r="2"/><circle cx="84" cy="210" r="2"/>
+  </g>
+  <circle cx="452" cy="190" r="94" fill="#FF6B7A" stroke="#111827" stroke-width="6"/>
+  <ellipse cx="452" cy="190" rx="142" ry="42" fill="none" stroke="#FFD166" stroke-width="7" transform="rotate(-18 452 190)"/>
+  <circle cx="120" cy="196" r="58" fill="#55E6FF" stroke="#111827" stroke-width="6"/>
+  <path d="M96 196h48M120 172v48" stroke="#111827" stroke-width="5" opacity="0.6"/>
+
+  <g transform="translate(218 104) rotate(28)">
+    <path d="M34 0c22 18 30 46 24 78l-24 18-24-18C-8 46 12 18 34 0z" fill="#FFF8E7" stroke="#111827" stroke-width="6"/>
+    <circle cx="34" cy="42" r="12" fill="#55E6FF" stroke="#111827" stroke-width="5"/>
+    <path d="M10 78L-4 116l28-22M58 78l14 38-28-22" fill="#FF6B7A" stroke="#111827" stroke-width="6" stroke-linejoin="round"/>
+    <path d="M34 96v34" stroke="#FFD166" stroke-width="10" stroke-linecap="round"/>
+  </g>
+
+  <text x="34" y="300" font-family="Arial Black, sans-serif" font-weight="900" font-size="34" fill="#72F2B8">MISSION ARCHITECT</text>
+  <text x="36" y="326" font-family="Arial, sans-serif" font-weight="700" font-size="15" letter-spacing="3" fill="#FFF8E7">GODOT 4 · SPACE APPS</text>
+</svg>

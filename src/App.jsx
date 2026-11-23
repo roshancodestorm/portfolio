@@ -9,6 +9,7 @@ import { SocialIconRow } from './components/ui/SocialButtons'
 import Home from './components/sections/Home'
 import Projects from './components/sections/Projects'
 import Skills from './components/sections/Skills'
+import GitHubActivity from './components/sections/GitHubActivity'
 import About from './components/sections/About'
 import Connect from './components/sections/Connect'
 import Contact from './components/sections/Contact'
@@ -67,7 +68,7 @@ export default function App() {
   }, [])
 
   useEffect(() => {
-    if (route && route !== 'projects' && route !== 'skills' && route !== 'about' && route !== 'contact') return
+    if (route && !['projects', 'skills', 'activity', 'about', 'contact'].includes(route)) return
     const elements = SECTIONS.map((id) => document.getElementById(id)).filter(Boolean)
     if (!elements.length) return
     const observer = new IntersectionObserver(
@@ -111,6 +112,7 @@ export default function App() {
         <Home sectionId="home" profileImage={profileImage} social={social} onNavigate={handleNavigate} onResume={handleResume} />
         <Projects projects={projects} />
         <Skills />
+        <GitHubActivity sectionId="activity" />
         <About sectionId="about" profileImage={profileImage} />
         <Connect sectionId="connect" social={social} />
         <Contact sectionId="contact" />
